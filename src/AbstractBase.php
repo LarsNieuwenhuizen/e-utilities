@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LarsNieuwenhuizen\EUtilities;
 
 use GuzzleHttp\Client;
+use LarsNieuwenhuizen\EUtilities\Interfaces\EUtility;
 
 abstract class AbstractBase
 {
@@ -22,6 +23,11 @@ abstract class AbstractBase
      * @var Client
      */
     protected $httpClient;
+
+    /**
+     * @var string
+     */
+    protected $apiKey = '';
 
     /**
      * AbstractBase constructor.
@@ -44,7 +50,7 @@ abstract class AbstractBase
      * @param string $baseUrl
      * @return AbstractBase
      */
-    public function setBaseUrl($baseUrl): AbstractBase
+    public function setBaseUrl($baseUrl): EUtility
     {
         $this->baseUrl = $baseUrl;
 
@@ -63,7 +69,7 @@ abstract class AbstractBase
      * @param string $urlPath
      * @return AbstractBase
      */
-    public function setUrlPath($urlPath): AbstractBase
+    public function setUrlPath($urlPath): EUtility
     {
         $this->urlPath = $urlPath;
 
@@ -82,9 +88,28 @@ abstract class AbstractBase
      * @param Client $httpClient
      * @return AbstractBase
      */
-    public function setHttpClient(Client $httpClient): AbstractBase
+    public function setHttpClient(Client $httpClient): EUtility
     {
         $this->httpClient = $httpClient;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param string $apiKey
+     * @return EUtility
+     */
+    public function setApiKey(string $apiKey): EUtility
+    {
+        $this->apiKey = $apiKey;
 
         return $this;
     }

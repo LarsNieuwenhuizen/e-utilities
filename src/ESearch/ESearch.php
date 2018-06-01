@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace LarsNieuwenhuizen\EUtilities\Esearch;
 
 use LarsNieuwenhuizen\EUtilities\AbstractBase;
+use LarsNieuwenhuizen\EUtilities\Interfaces\EUtility;
 
-class ESearch extends AbstractBase
+class ESearch extends AbstractBase implements EUtility
 {
 
     /**
@@ -27,12 +28,14 @@ class ESearch extends AbstractBase
      * @param Query $query
      * @return string
      */
-    public function execute(Query $query)
+    public function execute(Query $query): string
     {
         $requestUri = $this->getBaseUrl() .
             '?db=' . $this->getDatabase() .
+            ($this->getApiKey() ? '&api_key=' . $this->getApiKey() : '') .
             '&term=' . $query->getQueryString() .
             '&retmode=' . $this->getReturnMode();
+
         $result = $this->getHttpClient()->get($requestUri)
             ->getBody()
             ->getContents();
